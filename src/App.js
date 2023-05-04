@@ -11,32 +11,32 @@ import { useState, useEffect } from "react";
 function App() {
   const [countries, setCountries] = useState(null)
   
-  useEffect(()=>{
-    console.log("fase de montaje");
-    
+  useEffect(()=>{    
     axios.get("https://ih-countries-api.herokuapp.com/countries")
     .then(response => {
       setCountries(response.data);
-      console.log(response.data)
     })
     .catch(err => {
         console.log(err);
     })
-
   }, []);
 
   return (
     <div className="App">
       <Navbar />
       <div className="container">
-        {countries ? <div className="row">
-          <CountriesList countries={countries}/>
-          <Routes>
-            <Route path="/:idCountry" element={ <CountriesDetails countries={countries} /> } />
-          </Routes>
-          </div> : <img src="https://tenor.com/es/view/loading-gif-9212724" />}
-        
-        </div>
+        {countries ? 
+          <div className="row">
+            <CountriesList countries={countries}/>
+            <Routes>
+              <Route path="/:idCountry" element={ <CountriesDetails countries={countries} define_state={null} /> } />
+            </Routes>
+          </div> : 
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        }
+      </div>
     </div>
   );
 }
